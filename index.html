@@ -10,16 +10,16 @@
     <meta property="og:image" content="photo1.jpg">
 
     <style>
-        /* --- OPTIMIZED FAST NIGHT THEME --- */
+        /* --- OPTIMIZED FAST NIGHT THEME WITH GLOWS --- */
         :root {
             --bg-dark: #030712;
             --card-bg: rgba(10, 18, 36, 0.88);
-            --border-color: rgba(96, 165, 250, 0.25);
-            --border-glow: rgba(147, 197, 253, 0.4);
+            --border-color: rgba(96, 165, 250, 0.35);
+            --border-glow: rgba(147, 197, 253, 0.6);
             --text-primary: #ffffff;
             --text-secondary: #cbd5e1;
-            --blue-glow: rgba(59, 130, 246, 0.25);
-            --white-glow: rgba(255, 255, 255, 0.8);
+            --blue-glow: rgba(59, 130, 246, 0.4);
+            --text-glow-val: 0 0 10px rgba(147, 197, 253, 0.75), 0 0 20px rgba(59, 130, 246, 0.4);
         }
 
         * {
@@ -119,7 +119,7 @@
             border-radius: 50%;
             cursor: pointer;
             margin-top: 20px;
-            box-shadow: 0 0 20px var(--blue-glow);
+            box-shadow: 0 0 25px var(--blue-glow), inset 0 0 10px rgba(147, 197, 253, 0.3);
             animation: pulse 2s infinite;
             display: flex;
             justify-content: center;
@@ -128,9 +128,9 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(0.96); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(0.96); }
+            0% { transform: scale(0.96); box-shadow: 0 0 15px var(--blue-glow); }
+            50% { transform: scale(1.05); box-shadow: 0 0 30px var(--blue-glow); }
+            100% { transform: scale(0.96); box-shadow: 0 0 15px var(--blue-glow); }
         }
 
         /* --- MAIN CONTAINER --- */
@@ -150,18 +150,32 @@
             opacity: 1;
         }
 
-        /* STATIC TEXT CARDS (NO ANIMATION/HIDDEN STATE) */
+        /* STATIC CARDS WITH GLOWING BORDER */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 18px;
             padding: 20px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.12), 0 8px 20px rgba(0, 0, 0, 0.5);
             line-height: 1.6;
             font-size: 0.95rem;
             color: var(--text-secondary);
             opacity: 1;
             transform: none;
+        }
+
+        /* BIG HEART ON TOP OF FIRST CARD */
+        .card-top-heart {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 12px rgba(147, 197, 253, 0.8));
+            animation: gentleFloat 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes gentleFloat {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-6px); }
         }
 
         .card p {
@@ -173,13 +187,14 @@
             margin-bottom: 0;
         }
 
+        /* TEXT HIGHLIGHT WITH NEON/STARRY GLOW EFFECT */
         .highlight {
             color: #ffffff;
-            font-weight: 500;
-            text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+            text-shadow: var(--text-glow-val);
         }
 
-        /* --- CROSSWISE PHOTO GALLERY (RETAINS SCROLL REVEAL) --- */
+        /* --- CROSSWISE PHOTO GALLERY WITH BORDER GLOW --- */
         .crosswise-gallery {
             display: flex;
             flex-direction: column;
@@ -195,7 +210,7 @@
             overflow: hidden;
             border: 1px solid var(--border-glow);
             background: #081024;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.25), 0 8px 20px rgba(0, 0, 0, 0.6);
             
             opacity: 0;
             transform: translateY(15px);
@@ -234,7 +249,7 @@
             gap: 8px;
             font-size: 0.8rem;
             color: var(--text-primary);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 15px var(--blue-glow);
             cursor: pointer;
         }
 
@@ -243,6 +258,7 @@
             height: 12px;
             background: #ffffff;
             border-radius: 2px;
+            box-shadow: 0 0 6px #ffffff;
             animation: bounce 0.8s infinite alternate;
         }
 
@@ -285,6 +301,7 @@
     <div class="container" id="mainContent">
 
         <div class="card">
+            <div class="card-top-heart">❤️‍🩹</div>
             <p><span class="highlight">Hi Stephanie,</span> mag-oopen up lang sana ako sa thoughts and feelings ko if it was okay with you? Teka, paano ko ba sisimulan to?</p>
             <p>So yea, it's more than a month since I received your first message. Di ko aakalain magmemessage ka non, pero before pa nun, I was actually planning to chat you first. Kukumustahin kita if you were doing well and okay, but I was afraid to do it kasi nahihiya ako.</p>
             <p>Tagal ko rin nag-isip ng way para makausap ka or somehow mag-start ulit, that's why I came up with a plan na mag-make at create ng private Minecraft server for the two of us. Almost 2 months ko rin ginawa yun. Trial and error talaga nangyayari non. After nun, natapos ko na, at nahihiya pa rin ako. Thankfully, nag-chat ka at dun na tayo nag-start mag-usap ulit.</p>
@@ -336,7 +353,7 @@
         const audioToggle = document.getElementById('audioToggle');
         const audioStatusText = document.getElementById('audioStatusText');
 
-        // Set default music volume to 35%
+        // Default volume set to 35%
         bgMusic.volume = 0.35;
 
         startBtn.addEventListener('click', () => {
